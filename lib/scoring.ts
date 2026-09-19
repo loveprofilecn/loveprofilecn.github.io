@@ -4,7 +4,12 @@ import { dimensionKeys, type Answers, type DimensionKey, type DimensionScores } 
 
 const clamp=(n:number)=>Math.max(0,Math.min(100,Math.round(n)));
 
-export function normalizeDimensionScore(raw:number,min:number,max:number){return max===min?50:clamp(((raw-min)/(max-min))*100)}
+// Questionnaire results describe a tendency rather than an absolute human trait.
+// Keep the reported range at 6–94 so the weakest/strongest answer is never
+// misread as “completely absent” or “absolutely certain”.
+export function normalizeDimensionScore(raw:number,min:number,max:number){
+ return max===min?50:Math.max(6,Math.min(94,Math.round(6+((raw-min)/(max-min))*88)))
+}
 
 export function calculateDimensionScores(answers:Answers):DimensionScores{
  const raw=Object.fromEntries(dimensionKeys.map(k=>[k,0])) as DimensionScores;
