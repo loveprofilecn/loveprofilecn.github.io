@@ -1,0 +1,1 @@
+export function LoveBrainGauge({score}:{score:number}){return <div className="main-gauge" style={{"--score":`${score*3.6}deg`} as React.CSSProperties}><div><strong>{score}</strong><span>/ 100</span></div></div>}
